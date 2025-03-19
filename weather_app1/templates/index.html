@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды на 2025 год</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Прогноз погоды на 2025 год</h1>
+        <form method="POST">
+            <label for="city">Введите город:</label>
+            <input type="text" id="city" name="city" required placeholder="Например, Moscow">
+            <button type="submit">Получить прогноз</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if predictions %}
+            <h2>Прогноз для города {{ city }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Месяц</th>
+                        <th>Средняя температура (°C)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prediction in predictions %}
+                        <tr>
+                            <td>{{ prediction['month'] }}</td>
+                            <td>{{ prediction['predicted_temp'] | round(2) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>
